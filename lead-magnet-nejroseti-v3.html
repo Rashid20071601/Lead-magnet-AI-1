@@ -34,7 +34,7 @@ td:first-child{font-weight:800;color:var(--t)}
 tr{transition:background .2s}tbody tr:hover{background:var(--c)}
 h3.k{margin:44px 0 12px;font-family:Unbounded,sans-serif;font-size:16px}
 .pr{position:relative;background:var(--c);border:1px solid var(--l);border-left:3px solid var(--t);border-radius:12px;padding:18px 20px;font-size:15px}
-.pr p{margin:0}
+.pr p{margin:0}.pr p+p{margin-top:12px}
 .pr em{font-style:normal;color:var(--t);font-weight:600}
 .cp{position:absolute;top:10px;right:10px;background:none;border:1px solid var(--l);color:var(--g);font:600 12px Manrope,system-ui,sans-serif;padding:5px 11px;border-radius:99px;cursor:pointer;transition:.2s}
 .cp:hover{border-color:var(--t);color:var(--t)}
@@ -151,6 +151,21 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--t);outline-offset:3
  #fx{width:calc(100% - 32px);text-align:center}
 }
 @media(prefers-reduced-motion:reduce){#fx{transition:none}}
+
+/* prompt accordion */
+.ac{border:1px solid var(--l);border-radius:14px;background:var(--c);margin-bottom:10px;transition:border-color .25s}
+.ac:hover,.ac[open]{border-color:var(--t)}
+.ac summary{list-style:none;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:16px;padding:18px 20px;font-weight:700;font-size:17px;line-height:1.35;border-radius:14px}
+.ac summary::-webkit-details-marker{display:none}
+.ac summary:after{content:"";flex:none;width:9px;height:9px;border:solid var(--t);border-width:0 2px 2px 0;transform:rotate(45deg) translate(-2px,-2px);transition:transform .3s var(--e)}
+.ac[open] summary:after{transform:rotate(225deg) translate(-2px,-2px)}
+.ac summary:focus-visible{outline:2px solid var(--t);outline-offset:2px}
+.ac .bd2{padding:0 20px 20px}
+.ac[open] .bd2{animation:ac .4s var(--e)}
+.ac .pr{background:var(--bg)}.ac .chk{margin-top:14px}
+.pr .lbl{display:block;font:700 11px Manrope,system-ui,sans-serif;letter-spacing:.16em;text-transform:uppercase;color:var(--g);margin-bottom:3px}
+@keyframes ac{from{opacity:0;transform:translateY(-6px)}}
+@media(prefers-reduced-motion:reduce){.ac[open] .bd2{animation:none}.ac summary:after{transition:none}}
 </style></head>
 <body>
 <div id="bar"></div><svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs><symbol id="iu" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7"/></symbol><symbol id="ic" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9.5 17V7h3.5a2.5 2.5 0 010 5H9.5M8 14.5h5"/></symbol><symbol id="ib" viewBox="0 0 24 24"><rect x="4" y="8" width="16" height="12" rx="3"/><path d="M12 8V4M10 4h4"/><circle cx="9" cy="14" r="1.3"/><circle cx="15" cy="14" r="1.3"/></symbol><symbol id="im" viewBox="0 0 24 24"><path d="M4 5h16v11H10l-4 4v-4H4z"/></symbol></defs></svg><div class="bg" aria-hidden="true"><svg class="ic" style="top:7%;right:calc(50% + 470px);--s:40px;--r:-8deg;--d:9s;--l:-0.0s"><use href="#iu"/></svg><svg class="ic" style="top:22%;right:calc(50% + 360px);--s:32px;--r:10deg;--d:11s;--l:-1.7s"><use href="#ic"/></svg><svg class="ic t" style="top:38%;right:calc(50% + 430px);--s:43px;--r:-6deg;--d:10s;--l:-3.4s"><use href="#ib"/></svg><svg class="ic" style="top:54%;right:calc(50% + 330px);--s:35px;--r:8deg;--d:12s;--l:-5.1s"><use href="#im"/></svg><svg class="ic t" style="top:70%;right:calc(50% + 450px);--s:30px;--r:-10deg;--d:9s;--l:-6.8s"><use href="#iu"/></svg><svg class="ic" style="top:86%;right:calc(50% + 380px);--s:38px;--r:6deg;--d:11s;--l:-8.5s"><use href="#ic"/></svg><svg class="ic" style="top:12%;left:calc(50% + 340px);--s:37px;--r:8deg;--d:10s;--l:-10.2s"><use href="#ib"/></svg><svg class="ic" style="top:28%;left:calc(50% + 460px);--s:42px;--r:-6deg;--d:12s;--l:-11.9s"><use href="#iu"/></svg><svg class="ic t" style="top:44%;left:calc(50% + 370px);--s:33px;--r:10deg;--d:9s;--l:-13.6s"><use href="#im"/></svg><svg class="ic" style="top:60%;left:calc(50% + 440px);--s:44px;--r:-8deg;--d:11s;--l:-15.3s"><use href="#ic"/></svg><svg class="ic t" style="top:76%;left:calc(50% + 350px);--s:35px;--r:6deg;--d:10s;--l:-17.0s"><use href="#ib"/></svg><svg class="ic" style="top:91%;left:calc(50% + 420px);--s:32px;--r:-8deg;--d:12s;--l:-18.7s"><use href="#iu"/></svg></div>
@@ -213,27 +228,55 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--t);outline-offset:3
 
 <section id="prompts"><div class="w">
 <div data-a><div class="tag"><b>06</b>Запросы</div><h2>Готовый запрос и проверка</h2><div class="ln"></div>
-<p>Для каждой рутины ниже есть запрос. Скопируй его и подставь свои данные в скобках.</p></div>
+<p>Для каждой рутины ниже есть запрос. Открой нужный, скопируй его и подставь свои данные в скобках. Все запросы собраны по одной схеме: роль, контекст, задача, формат, ограничения.</p></div>
 
-<div data-a><h3 class="k">Тексты</h3>
-<div class="pr"><p>Я [профессия]. Мне нужно написать [статью, описание услуги, коммерческое предложение] для [кто читает]. Главная мысль: [мысль]. Вот пример моего текста, чтобы ты уловил мой стиль: [пример]. Сначала предложи структуру из [N] пунктов, потом напиши черновик. Если не хватает данных, задай мне вопросы.</p></div>
-<p class="chk"><b>Проверь:</b> смысл тот, который ты вкладывал? Нет выдуманных фактов и цифр? Текст звучит так, как будто писал ты?</p></div>
-
-<div data-a><h3 class="k">Переписка с клиентами</h3>
-<div class="pr"><p>Я [профессия]. Клиент написал: [вставь сообщение]. Мои условия: [цена, сроки, что входит]. Ответь в моём стиле: дружелюбно и по делу, без лишних обещаний, не больше [N] предложений. Вот пример моего прошлого ответа: [пример]. Если не хватает данных, сначала задай вопросы.</p></div>
-<p class="chk"><b>Проверь:</b> цифры и сроки совпадают с твоими условиями? Нет обещаний, которых ты не давал? Тон похож на твой?</p></div>
-
-<div data-a><h3 class="k">Контент</h3>
-<div class="pr"><p>Я [профессия], моя аудитория: [кто]. Предложи [N] идей для [постов или рилсов] на тему [тема]. Для каждой идеи напиши заголовок, главную мысль и место, куда я вставлю пример из своей практики. Не придумывай истории обо мне. Оставляй для них пустые места.</p></div>
-<p class="chk"><b>Проверь:</b> нет выдуманных историй о тебе? Тема нужна твоей аудитории?</p></div>
-
-<div data-a><h3 class="k">Отчёты</h3>
-<div class="pr"><p>Вот данные за [период]: [вставь данные или заметки]. Составь отчёт для [кто читает]. Сверху краткий вывод на 3–4 строки. Дальше основные цифры, что изменилось и что делать дальше. Не добавляй цифры, которых нет в данных. Если данных не хватает, напиши, каких именно.</p></div>
-<p class="chk"><b>Проверь:</b> цифры совпадают с исходными данными? Выводы твои, а не нейросети?</p></div>
-
-<div data-a><h3 class="k">Поиск информации</h3>
-<div class="pr"><p>Мне нужно разобраться в теме: [тема]. Объясни простыми словами, чтобы читать минут [N]. Что такое основные понятия, что важно знать, о чём спорят специалисты. В конце дай список вопросов, которые стоит проверить в первоисточниках.</p></div>
-<p class="chk"><b>Проверь:</b> важные факты и цифры сверь с первоисточниками. Нейросеть может ошибаться. Пока не проверил главное, в работу не бери.</p></div>
+<div class="st" data-a style="margin-top:26px">
+<details class="ac" name="pr"><summary>Тексты</summary><div class="bd2">
+<div class="pr">
+<p><b class="lbl">Роль</b>Ты — опытный редактор и копирайтер. Пишешь для экспертов в сфере [профессия] и сохраняешь авторский стиль.</p>
+<p><b class="lbl">Контекст</b>Я [профессия]. Текст читает [кто читает]. Главная мысль: [мысль]. Вот пример моего текста, по нему нужно уловить мой стиль: [пример].</p>
+<p><b class="lbl">Задача</b>Напиши [статью, описание услуги или коммерческое предложение]. Действуй по шагам:<br>1. Если не хватает данных, задай мне вопросы.<br>2. Предложи структуру из [N] пунктов.<br>3. Напиши черновик по этой структуре.</p>
+<p><b class="lbl">Формат</b>Сначала структура списком, затем черновик на [N] знаков. Простой язык, короткие абзацы, подзаголовки.</p>
+<p><b class="lbl">Ограничения</b>Не выдумывай факты, цифры и кейсы. Не меняй главную мысль. Без канцелярита и штампов. Если данных нет, оставь пометку [уточнить].</p>
+</div>
+<p class="chk"><b>Проверь:</b> смысл тот, который ты вкладывал? Нет выдуманных фактов и цифр? Текст звучит так, как будто писал ты?</p></div></details>
+<details class="ac" name="pr"><summary>Переписка с клиентами</summary><div class="bd2">
+<div class="pr">
+<p><b class="lbl">Роль</b>Ты — мой помощник. Отвечаешь клиентам от моего имени: дружелюбно и по делу. Я [профессия].</p>
+<p><b class="lbl">Контекст</b>Клиент написал: [вставь сообщение]. Мои условия: [цена, сроки, что входит]. Вот пример моего прошлого ответа, по нему нужно поймать мой тон: [пример].</p>
+<p><b class="lbl">Задача</b>Составь первый вариант ответа клиенту. Если не хватает данных, сначала задай мне вопросы.</p>
+<p><b class="lbl">Формат</b>Готовый текст ответа, не больше [N] предложений. Без вступлений вроде «Вот ваш ответ».</p>
+<p><b class="lbl">Ограничения</b>Не обещай ничего, чего нет в моих условиях. Не придумывай цены и сроки. Без давления и шаблонных фраз.</p>
+</div>
+<p class="chk"><b>Проверь:</b> цифры и сроки совпадают с твоими условиями? Нет обещаний, которых ты не давал? Тон похож на твой?</p></div></details>
+<details class="ac" name="pr"><summary>Контент</summary><div class="bd2">
+<div class="pr">
+<p><b class="lbl">Роль</b>Ты — контент-стратег, который работает с экспертами в сфере [профессия].</p>
+<p><b class="lbl">Контекст</b>Я [профессия], моя аудитория: [кто]. Тема: [тема]. Формат: [посты или рилсы].</p>
+<p><b class="lbl">Задача</b>Предложи [N] идей. Для каждой напиши заголовок, главную мысль и пустое место, куда я вставлю пример из своей практики.</p>
+<p><b class="lbl">Формат</b>Нумерованный список. У каждой идеи три строки: «Заголовок», «Мысль», «Мой пример: ____».</p>
+<p><b class="lbl">Ограничения</b>Не придумывай истории обо мне, оставляй для них пустые места. Не предлагай общие темы, которые не связаны с моей аудиторией.</p>
+</div>
+<p class="chk"><b>Проверь:</b> нет выдуманных историй о тебе? Тема нужна твоей аудитории?</p></div></details>
+<details class="ac" name="pr"><summary>Отчёты</summary><div class="bd2">
+<div class="pr">
+<p><b class="lbl">Роль</b>Ты — аналитик. Готовишь короткие и понятные отчёты для [кто читает].</p>
+<p><b class="lbl">Контекст</b>Вот данные за [период]: [вставь данные или заметки].</p>
+<p><b class="lbl">Задача</b>Составь отчёт. Действуй по шагам:<br>1. Напиши краткий вывод.<br>2. Покажи основные цифры.<br>3. Опиши, что изменилось.<br>4. Предложи, что делать дальше.<br>Если данных не хватает, напиши, каких именно.</p>
+<p><b class="lbl">Формат</b>Сверху вывод на 3–4 строки. Ниже пункты по порядку шагов. Цифры списком или таблицей.</p>
+<p><b class="lbl">Ограничения</b>Не добавляй цифры, которых нет в данных. Не делай выводы, которые данные не подтверждают. Без воды.</p>
+</div>
+<p class="chk"><b>Проверь:</b> цифры совпадают с исходными данными? Выводы твои, а не нейросети?</p></div></details>
+<details class="ac" name="pr"><summary>Поиск информации</summary><div class="bd2">
+<div class="pr">
+<p><b class="lbl">Роль</b>Ты — исследователь. Объясняешь сложные темы простыми словами.</p>
+<p><b class="lbl">Контекст</b>Мне нужно разобраться в теме: [тема]. Зачем мне это: [для какой задачи].</p>
+<p><b class="lbl">Задача</b>Объясни тему. Расскажи, что такое основные понятия, что важно знать и о чём спорят специалисты. В конце дай список вопросов, которые стоит проверить в первоисточниках.</p>
+<p><b class="lbl">Формат</b>Текст на [N] минут чтения. Подзаголовки, короткие абзацы. В конце список вопросов для проверки.</p>
+<p><b class="lbl">Ограничения</b>Не выдумывай факты, источники и ссылки. Если не уверен, так и скажи. Не используй термины без пояснения.</p>
+</div>
+<p class="chk"><b>Проверь:</b> важные факты и цифры сверь с первоисточниками. Нейросеть может ошибаться. Пока не проверил главное, в работу не бери.</p></div></details>
+</div>
 
 <div class="card" data-a style="margin-top:44px"><h3 class="t">Чтобы не вставлять одно и то же в каждый новый чат</h3><p class="g">Создай в нейросети проект. Загрузи туда информацию о себе, своих клиентах и пару своих текстов. Дальше она будет отвечать точнее с первого раза.</p></div>
 </div></section>
@@ -290,12 +333,14 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--t);outline-offset:3
 (function(){
 var d=document,r=d.documentElement;
 d.querySelectorAll('.pr').forEach(function(p){
- var t=p.textContent.trim(),b=d.createElement('button');
+ var t=[].map.call(p.querySelectorAll('p'),function(q){var c=q.cloneNode(true);[].forEach.call(c.querySelectorAll('br'),function(x){x.replaceWith('\n')});[].forEach.call(c.querySelectorAll('.lbl'),function(x){x.textContent=x.textContent.toUpperCase()+': '});return c.textContent.trim()}).join('\n\n'),b=d.createElement('button');
  p.innerHTML=p.innerHTML.replace(/\[[^\]]+\]/g,'<em>$&</em>');
  b.className='cp';b.textContent='Копировать';
  b.onclick=function(){(navigator.clipboard?navigator.clipboard.writeText(t):Promise.reject()).then(function(){b.textContent='Скопировано'},function(){b.textContent='Выдели вручную'});setTimeout(function(){b.textContent='Копировать'},1800)};
  p.appendChild(b);
 });
+var ac=d.querySelectorAll('details.ac');
+ac.forEach(function(x){x.addEventListener('toggle',function(){if(x.open)ac.forEach(function(y){if(y!==x)y.open=false})})});
 d.querySelectorAll('.sc tbody tr').forEach(function(tr){var h=d.querySelectorAll('.sc th');[].forEach.call(tr.children,function(td,i){if(h[i])td.setAttribute('data-l',h[i].textContent)})});
 var bar=d.getElementById('bar'),fx=d.getElementById('fx'),cta=d.getElementById('cta');
 addEventListener('scroll',function(){bar.style.transform='scaleX('+(scrollY/(r.scrollHeight-innerHeight||1))+')';fx.classList.toggle('on',scrollY>900&&cta.getBoundingClientRect().top>innerHeight)},{passive:true});
